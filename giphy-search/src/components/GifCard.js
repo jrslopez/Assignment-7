@@ -8,8 +8,8 @@ function GifCard() {
 
     const fetchPost = async () => {
         const response = await axios(`http://api.giphy.com/v1/gifs/search?q=${gif}&api_key=efd9tZUH8eWQP62dcQtIZvx4K63dbt1I`)
-        setGif(response.data)
-        console.log(response.data)
+        setPost(response.data.data)
+        console.log(response.data.data)
     }
 
     useEffect( () => {
@@ -28,6 +28,7 @@ function GifCard() {
                     return(
                         <div className = "gif" key={element.id}>
                         <div>{element.url}</div>
+                        <div>{element.images.original.url}</div>
                         </div>
                     
                 )})}</div>
