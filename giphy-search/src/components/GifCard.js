@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
+//import SearchField from './SearchField'
 
 function GifCard() {
 
-    const [post, setPost] = useState([])
+    let [post, setPost] = useState([])
     const [gif, setGif] = useState([])
 
     const fetchPost = async () => {
@@ -12,8 +13,22 @@ function GifCard() {
         console.log(response.data.data)
     }
 
+    const displayTrending = async () => {
+        const trending = await axios(`http://api.giphy.com/v1/gifs/trending?api_key=efd9tZUH8eWQP62dcQtIZvx4K63dbt1I`)
+        setPost(trending.data.data)
+        console.log(trending.data.data)
+    }
+
+    const displayRandom = async () => {
+        let random = await axios('http://api.giphy.com/v1/gifs/random?api_key=efd9tZUH8eWQP62dcQtIZvx4K63dbt1I')
+        let randomArr = []
+        randomArr.push(random.data.data)
+        setPost(randomArr)
+        console.log(randomArr)
+    }
+
     useEffect( () => {
-        fetchPost()
+        displayTrending()
     }, [])
 
     return (
@@ -22,15 +37,16 @@ function GifCard() {
             <div>
                 <input type = "text" value = {gif} onChange = {e => setGif(e.target.value)}/>
                 <button onClick = {fetchPost}>Search</button>
+                <button onClick = {displayRandom}>Random GIF</button>
             </div>
+            {/* <SearchField/> */}
             <div>
                 {post.map(element => {
                     return(
                         <div className = "gif" key={element.id}>
-                        <div>{element.url}</div>
-                        <div>{element.images.original.url}</div>
+                        <img src = {element.images.original.url} alt = "GIFs"/>
                         </div>
-                    
+        
                 )})}</div>
         </div>
     );
