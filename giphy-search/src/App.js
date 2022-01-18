@@ -1,11 +1,11 @@
 import './App.css';
 import './components/GifCard.js'
-import GifCard from './components/GifCard.js';
+import SearchField from './components/SearchField';
 
 function App() {
   return (
     <div className="App">
-      <GifCard/>
+      <SearchField/>
     </div>
   );
 }
